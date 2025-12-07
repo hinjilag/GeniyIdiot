@@ -8,7 +8,7 @@ namespace _12345
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Добро пожаловать в игре гений-идиот! Как к вам обращаться ?");
+            Console.WriteLine("Добро пожаловать в игру гений-идиот! Как к вам обращаться ?");
             string userName = Console.ReadLine();
             while (true)
             {
@@ -18,28 +18,22 @@ namespace _12345
                 Console.WriteLine("""                   
                     1) играть    
                     2) смотреть результаты     
-                    3) вход для админа                    
+                    3) вход для админа    
+                    0) выйти из игры
                     """);
                 string messageMenu = Console.ReadLine();
-                if (messageMenu == "5")
+                if (messageMenu == "0")
                 {
                     return;
                 }
                 if (messageMenu == "2")
                 {
-                    Console.WriteLine("пользователь    К.В.О.   диагноз");
-                    string[] fileData = File.ReadAllLines("..\\..\\..\\results.txt");
-
-                    for (int i = 0; i < fileData.Length; i++)
-                    {
-                        string line = fileData[i];
-                        string[] data = line.Split('#');
-                        Console.WriteLine($"{data[0]} \t\t {data[1]} \t{data[2]}");
-                    }
+                    SeeResults();
                 }
 
                 if (messageMenu == "3")
                 {
+
                     Console.WriteLine("введите пароль");
                     string password = Console.ReadLine();
                     if (password == "123")
@@ -50,14 +44,74 @@ namespace _12345
                         while (true)
                         {
                             Console.WriteLine("Что хочешь сделать?");
-                            Console.WriteLine("1) добавить вопрос   2) удалить вопрос    3) отчистить результаты " +
-                                "    4) выход из админки");
+                            Console.WriteLine("""
+                                1) добавить вопрос
+                                2) удалить вопрос
+                                3) изменить количество вопросов задаваемых пользователю
+                                4) отчистить результаты
+                                0) выход из админки
+                                """);
                             string actionAdm = Console.ReadLine();
-                            if (actionAdm == "4")
+                            if (actionAdm == "0")
                             {
                                 break;
                             }
-                            if (actionAdm == "3")
+                            if (actionAdm == "1")
+                            {
+                                Console.WriteLine("Напиши вопрос который хочешь добавить (убедись, что в конце слова не стоит пробел)");
+                                Console.WriteLine("Для отмены нажми  0");
+                                string addQuestion = Console.ReadLine();
+                                if (addQuestion == "0")
+                                {
+                                    break;
+                                }
+                                Console.WriteLine();
+                                File.AppendAllText("..\\..\\..\\questions.txt", addQuestion + Environment.NewLine);
+                                Console.WriteLine("Напиши ответ на этот вопрос (убедись, что в конце слова не стоит пробел)");
+                                string addAnswer = Console.ReadLine();
+                                File.AppendAllText("..\\..\\..\\answers.txt", addAnswer + Environment.NewLine);
+                                Console.WriteLine();
+                                Console.WriteLine("Вопрос успешно добавлен!");
+                            }
+
+                            if (actionAdm == "2") // удалить вопрос
+                            {
+                                Console.WriteLine("Напиши номер вопроса которого хочешь удалить");
+                                Console.WriteLine();                                                                                                
+
+                                string[] fileQuestions = File.ReadAllLines("..\\..\\..\\questions.txt");
+                                List<string> questions = new List<string>() { };
+                                for (int i = 0; i < fileQuestions.Length; i++) // проходимся по строкам
+                                {
+                                    questions.Add(fileQuestions[i]);
+                                }
+
+                                string[] fileAnswers = File.ReadAllLines("..\\..\\..\\answers.txt");
+                                List<string> answers = new List<string>() { };
+                                for (int i = 0; i < fileAnswers.Length; i++) // проходимся по строкам
+                                {
+                                    answers.Add(fileAnswers[i]);
+                                }
+
+
+                                for (int i = 1; i <= fileQuestions.Length; i++) // выводим вопросы чтоб тип выбрал
+                                {
+                                    Console.Write($"{i}) ");
+                                    Console.WriteLine(fileQuestions[i - 1]);
+                                }
+                                int deleteQuestion = Convert.ToInt32(Console.ReadLine());
+
+                                questions.RemoveAt(deleteQuestion - 1);
+                                answers.RemoveAt(deleteQuestion - 1);
+                                File.WriteAllLines("..\\..\\..\\questions.txt", questions);
+                                File.WriteAllLines("..\\..\\..\\answers.txt", answers);
+                                
+                                Console.WriteLine();
+                                Console.WriteLine("Вопрос успешно удален!");
+                                Console.WriteLine();
+
+                            }
+                            if (actionAdm == "4")
                             {
                                 Console.WriteLine();
                                 File.WriteAllText("..\\..\\..\\results.txt", "");
@@ -94,25 +148,28 @@ namespace _12345
                     {
                         while (true)
                         {
-                            List<string> questions = new List<string>()
-                    {
-                        "четрые или пять?",
-                        "сколько ног у осьминога",
-                        "сколько пар завтра",
-                        "сколько время",
-                        "отчество Германа",
-                        "конор или макгрегор",
-                        "хабиб или нурмагомедов",
-                        "питон или си шарп",
-                    };
-                            List<string> answers = new List<string>() { "5", "2", "4", "9:52",
-                    "Вячеславоич", "конор", "хабиб", "си шарп" };
+                            // вопросы
+                            string[] fileQuestions = File.ReadAllLines("..\\..\\..\\questions.txt");
+                            List<string> questions = new List<string>() { };
+                            for (int i = 0; i < fileQuestions.Length; i++) // проходимся по строкам
+                            {
+                                questions.Add(fileQuestions[i]);
+                            }
+
+
+                            // ответы
+                            string[] fileAnswers = File.ReadAllLines("..\\..\\..\\answers.txt");
+                            List<string> answers = new List<string>() { };
+                            for (int i = 0; i < fileAnswers.Length; i++)
+                            {
+                                answers.Add(fileAnswers[i]);
+                            }
 
                             int сorrectAnswersCount = 0;
 
                             for (int i = 1; i <= questionsCount; i++) // сам тест 
                             {
-                                int randomIndex = new Random().Next(0, answers.Count);
+                                int randomIndex = new Random().Next(0, questions.Count);
                                 Console.Write($"{i}) ");
                                 Console.WriteLine(questions[randomIndex]);
 
@@ -208,6 +265,21 @@ namespace _12345
 
         }
 
+        // 2) смотреть результаты 
+        static void SeeResults()
+        {
+            Console.WriteLine("пользователь    К.В.О.   диагноз");
+            string[] fileData = File.ReadAllLines("..\\..\\..\\results.txt");
+
+            for (int i = 0; i < fileData.Length; i++) // fileData.Length = количество строк в файле
+            {
+                string resultsLine = fileData[i];
+                string[] data = resultsLine.Split('#');
+                Console.WriteLine($"{data[0]} \t\t{data[1]} \t {data[2]}");
+
+            }
+            Console.WriteLine();
+        }
 
     }
 
