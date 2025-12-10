@@ -31,7 +31,7 @@ namespace _12345
                     SeeResults();
                 }
 
-                if (messageMenu == "3")
+                if (messageMenu == "3") // админка
                 {
 
                     Console.WriteLine("введите пароль");
@@ -58,57 +58,12 @@ namespace _12345
                             }
                             if (actionAdm == "1")
                             {
-                                Console.WriteLine("Напиши вопрос который хочешь добавить (убедись, что в конце слова не стоит пробел)");
-                                Console.WriteLine("Для отмены нажми  0");
-                                string addQuestion = Console.ReadLine();
-                                if (addQuestion == "0")
-                                {
-                                    break;
-                                }
-                                Console.WriteLine();
-                                File.AppendAllText("..\\..\\..\\questions.txt", addQuestion + Environment.NewLine);
-                                Console.WriteLine("Напиши ответ на этот вопрос (убедись, что в конце слова не стоит пробел)");
-                                string addAnswer = Console.ReadLine();
-                                File.AppendAllText("..\\..\\..\\answers.txt", addAnswer + Environment.NewLine);
-                                Console.WriteLine();
-                                Console.WriteLine("Вопрос успешно добавлен!");
+                                AddQuestion();
                             }
 
                             if (actionAdm == "2") // удалить вопрос
                             {
-                                Console.WriteLine("Напиши номер вопроса которого хочешь удалить");
-                                Console.WriteLine();                                                                                                
-
-                                string[] fileQuestions = File.ReadAllLines("..\\..\\..\\questions.txt");
-                                List<string> questions = new List<string>() { };
-                                for (int i = 0; i < fileQuestions.Length; i++) // проходимся по строкам
-                                {
-                                    questions.Add(fileQuestions[i]);
-                                }
-
-                                string[] fileAnswers = File.ReadAllLines("..\\..\\..\\answers.txt");
-                                List<string> answers = new List<string>() { };
-                                for (int i = 0; i < fileAnswers.Length; i++) // проходимся по строкам
-                                {
-                                    answers.Add(fileAnswers[i]);
-                                }
-
-
-                                for (int i = 1; i <= fileQuestions.Length; i++) // выводим вопросы чтоб тип выбрал
-                                {
-                                    Console.Write($"{i}) ");
-                                    Console.WriteLine(fileQuestions[i - 1]);
-                                }
-                                int deleteQuestion = Convert.ToInt32(Console.ReadLine());
-
-                                questions.RemoveAt(deleteQuestion - 1);
-                                answers.RemoveAt(deleteQuestion - 1);
-                                File.WriteAllLines("..\\..\\..\\questions.txt", questions);
-                                File.WriteAllLines("..\\..\\..\\answers.txt", answers);
-                                
-                                Console.WriteLine();
-                                Console.WriteLine("Вопрос успешно удален!");
-                                Console.WriteLine();
+                                DeleteQuestion();
 
                             }
                             if (actionAdm == "4")
@@ -142,7 +97,7 @@ namespace _12345
 
                     if (isYes == false)
                     {
-                        Console.WriteLine("До свидания");
+                        Console.WriteLine();
                     }
                     else
                     {
@@ -281,6 +236,60 @@ namespace _12345
             Console.WriteLine();
         }
 
+        static void AddQuestion() // добавить вопрос
+        {
+            Console.WriteLine("Напиши вопрос который хочешь добавить.");
+            Console.WriteLine("Для отмены нажми  0");
+            string addQuestion = Console.ReadLine().Trim();
+            if (addQuestion == "0")
+            {
+                return;
+            }
+            Console.WriteLine();
+            File.AppendAllText("..\\..\\..\\questions.txt", addQuestion + Environment.NewLine);
+            Console.WriteLine("Напиши ответ на этот вопрос (убедись, что в конце слова не стоит пробел)");
+            string addAnswer = Console.ReadLine().Trim();
+            File.AppendAllText("..\\..\\..\\answers.txt", addAnswer + Environment.NewLine);
+            Console.WriteLine();
+            Console.WriteLine("Вопрос успешно добавлен!");
+        }
+
+        static void DeleteQuestion() // удалитиь вопрос
+        {
+            Console.WriteLine("Напиши номер вопроса которого хочешь удалить");
+            Console.WriteLine();
+
+            string[] fileQuestions = File.ReadAllLines("..\\..\\..\\questions.txt");
+            List<string> questions = new List<string>() { };
+            for (int i = 0; i < fileQuestions.Length; i++) // проходимся по строкам
+            {
+                questions.Add(fileQuestions[i]);
+            }
+
+            string[] fileAnswers = File.ReadAllLines("..\\..\\..\\answers.txt");
+            List<string> answers = new List<string>() { };
+            for (int i = 0; i < fileAnswers.Length; i++) // проходимся по строкам
+            {
+                answers.Add(fileAnswers[i]);
+            }
+
+
+            for (int i = 1; i <= fileQuestions.Length; i++) // выводим вопросы чтоб тип выбрал
+            {
+                Console.Write($"{i}) ");
+                Console.WriteLine(fileQuestions[i - 1]);
+            }
+            int deleteQuestion = Convert.ToInt32(Console.ReadLine());
+
+            questions.RemoveAt(deleteQuestion - 1);
+            answers.RemoveAt(deleteQuestion - 1);
+            File.WriteAllLines("..\\..\\..\\questions.txt", questions);
+            File.WriteAllLines("..\\..\\..\\answers.txt", answers);
+
+            Console.WriteLine();
+            Console.WriteLine("Вопрос успешно удален!");
+            Console.WriteLine();
+        }
     }
 
 }
