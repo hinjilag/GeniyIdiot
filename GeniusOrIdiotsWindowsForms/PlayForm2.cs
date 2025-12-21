@@ -15,9 +15,10 @@ namespace GeniusOrIdiotsWindowsForms
     {
         List<string> questions;
         List<string> answers;
-        int correctAnswersCount = 0;
+        int сorrectAnswersCount = 0;
         int stepCount = 0;
-
+        int randomIndex = 0;
+        double questionsCount = 6; // количество вопросов задаваемых пользователю
         public PlayForm2()
         {
             InitializeComponent();
@@ -36,43 +37,68 @@ namespace GeniusOrIdiotsWindowsForms
             {
                 answers.Add(fileAnswers[i]);
             }
+            randomIndex = new Random().Next(0, questions.Count);
 
-            int randomIndex = new Random().Next(0, questions.Count);
             labelQuestion.Text = questions[randomIndex];
-            if (textBoxQuestion.Text == answers[randomIndex])
-            {
-                correctAnswersCount++;
-            }
-            questions.RemoveAt(randomIndex);
-            answers.RemoveAt(randomIndex);
-            stepCount++;
+            
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            textBoxQuestion.Text = "";
-            int randomIndex = new Random().Next(0, questions.Count);
-            if ( stepCount < 2)
+            if (textBoxQuestion.Text.Trim() == answers[randomIndex])
             {
-                labelQuestion.Text = questions[randomIndex];
-                if (textBoxQuestion.Text.Trim() == answers[randomIndex])
-                {
-                    correctAnswersCount++;
-                }
-                questions.RemoveAt(randomIndex);
-                answers.RemoveAt(randomIndex);
+                сorrectAnswersCount++;
+            }
+            textBoxQuestion.Text = "";
+            questions.RemoveAt(randomIndex);
+            answers.RemoveAt(randomIndex);
+            randomIndex = new Random().Next(0, questions.Count);
+
+            if ( stepCount < questionsCount)
+            {
+                labelQuestion.Text = questions[randomIndex];                                
             }
             else
             {
                 labelCAC.Visible = true;
                 labelDiagnosis.Visible = true;
-                labelCAC.Text = $"Количество верных ответов - {correctAnswersCount}";
-                labelDiagnosis.Text = $"Ваш диагноз";
-
+                textBoxQuestion.Enabled = false;
+                labelQuestion.Visible = false;
+                string diagnosis = DefinitDiagnosis(сorrectAnswersCount, questionsCount);
+                label1.Text = "Вы ответили на все вопросы!";
+                labelCAC.Text = $"Количество верных ответов - {сorrectAnswersCount}";
+                labelDiagnosis.Text = $"Ваш диагноз - {diagnosis}";
+                answer.Enabled = false;
             }
             stepCount++;
 
+        }
+        static string DefinitDiagnosis(int сorrectAnswersCount, double questionsCount)
+        {
+
+            double range = questionsCount / 6;
+            string diagnoz = "";
+            if (сorrectAnswersCount < range)
+                diagnoz = "бедолага";
+            else if (сorrectAnswersCount < 2 * range)
+                diagnoz = "дурак";
+            else if (сorrectAnswersCount < 3 * range)
+                diagnoz = "дурик";
+            else if (сorrectAnswersCount < 4 * range)
+                diagnoz = "жить будешь";
+            else if (сorrectAnswersCount < 5 * range)
+                diagnoz = "тип";
+            else
+                diagnoz = "тынг тип!!!";
+            return diagnoz;
+        }
+
+        private void менюToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Form1 play = new Form1();
+            play.Show();
+            Hide();
         }
     }
 }
