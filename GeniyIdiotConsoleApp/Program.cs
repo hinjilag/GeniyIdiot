@@ -8,6 +8,7 @@ namespace _12345
     {
         static void Main(string[] args)
         {
+            double questionsCount = 0;
             Console.WriteLine("Добро пожаловать в игру гений-идиот! Как к вам обращаться ?");
             string userName = Console.ReadLine();
             while (true)
@@ -66,6 +67,25 @@ namespace _12345
                                 DeleteQuestion();
 
                             }
+                            if (actionAdm == "3")
+                            {
+                                Console.WriteLine("Сколько вопросов задать пользователю?");
+                                questionsCount = Convert.ToInt32(Console.ReadLine());
+                                string[] fileQuestions = File.ReadAllLines("..\\..\\..\\questions.txt");
+                                List<string> questions = new List<string>() { };
+                                for (int i = 0; i < fileQuestions.Length; i++) // проходимся по строкам
+                                {
+                                    questions.Add(fileQuestions[i]);
+                                }
+                                while (questionsCount <= 0 || questionsCount > questions.Count)
+                                {
+                                    Console.WriteLine($"Столько вопросов нет! Введи число от 1 до {questions.Count}");
+                                    questionsCount = Convert.ToInt32(Console.ReadLine());
+                                }
+                                Console.WriteLine();
+                                Console.WriteLine($"Количество вопросов, которые будут заданы пользователю: {questionsCount}");
+                                Console.WriteLine();
+                            }
                             if (actionAdm == "4")
                             {
                                 Console.WriteLine();
@@ -82,8 +102,8 @@ namespace _12345
                 }
                 if (messageMenu == "1")
                 {
-                    // АДМИН, ВВЕДИ КОЛИЧЕСТВО ВОПРОСОВ КОТОРЫЕ БУДУТ ЗАДАНЫ ПОЛЬЗОВАТЕЛЮ
-                    double questionsCount = 5;
+                    // сколько вопросов будут выданы пользователю
+                    double questionsCountUser = questionsCount;
 
                     //начало игры
 
@@ -122,7 +142,7 @@ namespace _12345
 
                             int сorrectAnswersCount = 0;
 
-                            for (int i = 1; i <= questionsCount; i++) // сам тест 
+                            for (int i = 1; i <= questionsCountUser; i++) // сам тест 
                             {
                                 int randomIndex = new Random().Next(0, questions.Count);
                                 Console.Write($"{i}) ");
@@ -138,7 +158,7 @@ namespace _12345
                                 answers.RemoveAt(randomIndex);
                             }
 
-                            string diagnosis = DefinitDiagnosis(сorrectAnswersCount, questionsCount);
+                            string diagnosis = DefinitDiagnosis(сorrectAnswersCount, questionsCountUser);
                             Console.WriteLine();
 
                             Console.WriteLine($"Количество баллов: {сorrectAnswersCount}");
@@ -247,7 +267,7 @@ namespace _12345
             }
             Console.WriteLine();
             File.AppendAllText("..\\..\\..\\questions.txt", addQuestion + Environment.NewLine);
-            Console.WriteLine("Напиши ответ на этот вопрос (убедись, что в конце слова не стоит пробел)");
+            Console.WriteLine("Напиши ответ на этот вопрос");
             string addAnswer = Console.ReadLine().Trim();
             File.AppendAllText("..\\..\\..\\answers.txt", addAnswer + Environment.NewLine);
             Console.WriteLine();
@@ -279,17 +299,36 @@ namespace _12345
                 Console.Write($"{i}) ");
                 Console.WriteLine(fileQuestions[i - 1]);
             }
-            int deleteQuestion = Convert.ToInt32(Console.ReadLine());
 
+            string deleteQuestionStr = Console.ReadLine();
+
+            while (!double.TryParse(deleteQuestionStr, out _))
+            {
+                Console.WriteLine();
+                Console.WriteLine("Введи число!");
+                Console.WriteLine();
+                deleteQuestionStr = Console.ReadLine();
+            }
+            int deleteQuestion = Convert.ToInt32(deleteQuestionStr);
+            while (deleteQuestion <= 0 || deleteQuestion > questions.Count)
+            {
+                Console.WriteLine("Вопроса под таким номером нет! Введи номер вопроса из выданных");
+                deleteQuestion = Convert.ToInt32(Console.ReadLine());
+            }
             questions.RemoveAt(deleteQuestion - 1);
             answers.RemoveAt(deleteQuestion - 1);
             File.WriteAllLines("..\\..\\..\\questions.txt", questions);
             File.WriteAllLines("..\\..\\..\\answers.txt", answers);
-
             Console.WriteLine();
             Console.WriteLine("Вопрос успешно удален!");
             Console.WriteLine();
-        }
-    }
 
+        }
+
+
+
+
+    }
 }
+
+
