@@ -37,6 +37,20 @@ namespace GeniusOrIdiotsWindowsForms
             play.Show();
             Hide();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            CountQuestionForm play = new CountQuestionForm();
+            play.Show();
+            Hide();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            firstForm play = new firstForm();
+            play.Show();
+            Hide();
+        }
     }
     
 }

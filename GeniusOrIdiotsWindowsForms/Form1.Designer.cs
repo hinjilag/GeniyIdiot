@@ -53,7 +53,7 @@
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(287, 50);
+            this.textBox1.Location = new System.Drawing.Point(99, 50);
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(153, 28);
@@ -63,7 +63,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(132, 150);
+            this.label1.Location = new System.Drawing.Point(12, 149);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(61, 25);
             this.label1.TabIndex = 4;
@@ -73,7 +73,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(287, 94);
+            this.button1.Location = new System.Drawing.Point(99, 106);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(153, 42);
@@ -85,7 +85,7 @@
             // playButton
             // 
             this.playButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.playButton.Location = new System.Drawing.Point(287, 186);
+            this.playButton.Location = new System.Drawing.Point(99, 190);
             this.playButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.playButton.Name = "playButton";
             this.playButton.Size = new System.Drawing.Size(153, 34);
@@ -98,7 +98,7 @@
             // resultsButton
             // 
             this.resultsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.resultsButton.Location = new System.Drawing.Point(287, 226);
+            this.resultsButton.Location = new System.Drawing.Point(99, 242);
             this.resultsButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.resultsButton.Name = "resultsButton";
             this.resultsButton.Size = new System.Drawing.Size(153, 60);
@@ -111,7 +111,7 @@
             // adminButton
             // 
             this.adminButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.adminButton.Location = new System.Drawing.Point(287, 293);
+            this.adminButton.Location = new System.Drawing.Point(99, 330);
             this.adminButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.adminButton.Name = "adminButton";
             this.adminButton.Size = new System.Drawing.Size(153, 60);
@@ -124,10 +124,10 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(489, 50);
+            this.pictureBox1.Location = new System.Drawing.Point(332, 50);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(189, 192);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.Size = new System.Drawing.Size(403, 339);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 9;
             this.pictureBox1.TabStop = false;
             // 

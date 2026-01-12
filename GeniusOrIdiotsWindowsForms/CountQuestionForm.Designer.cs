@@ -1,6 +1,6 @@
 ﻿namespace GeniusOrIdiotsWindowsForms
 {
-    partial class firstForm
+    partial class CountQuestionForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,51 +28,51 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(firstForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CountQuestionForm));
+            this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Monotype Corsiva", 16.2F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(192, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(444, 102);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "в данном окошке пока еще идут работы! \r\nприносим свои искренние неудобсвта \r\nза п" +
+    "ричененные изввенения";
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(151, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(198, 136);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(447, 426);
+            this.pictureBox1.Size = new System.Drawing.Size(311, 302);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(604, 70);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(158, 101);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "здравый тип";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // firstForm
+            // CountQuestionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.pictureBox1);
-            this.Name = "firstForm";
-            this.Text = "firstForm";
-            this.Load += new System.EventHandler(this.firstForm_Load);
+            this.Controls.Add(this.label1);
+            this.Name = "CountQuestionForm";
+            this.Text = "CountQuestionForm";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button button1;
     }
 }

@@ -21,5 +21,12 @@ namespace GeniusOrIdiotsWindowsForms
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            adminForm play = new adminForm();
+            play.Show();
+            Hide();
+        }
     }
 }
