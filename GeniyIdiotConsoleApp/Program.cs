@@ -119,7 +119,7 @@ namespace _12345
                     {
                         Console.WriteLine();
                     }
-                    else //hjndjgfsd
+                    else 
                     {
                         while (true)
                         {
@@ -274,7 +274,7 @@ namespace _12345
             Console.WriteLine("Вопрос успешно добавлен!");
         }
 
-        static void DeleteQuestion() // удалитиь вопрос
+        static void DeleteQuestion() // удалить вопрос
         {
             Console.WriteLine("Напиши номер вопроса которого хочешь удалить");
             Console.WriteLine();

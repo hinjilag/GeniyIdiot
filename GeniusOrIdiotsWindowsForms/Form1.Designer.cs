@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -35,36 +36,36 @@
             this.playButton = new System.Windows.Forms.Button();
             this.resultsButton = new System.Windows.Forms.Button();
             this.adminButton = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(40, 7);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Location = new System.Drawing.Point(53, 9);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(492, 20);
+            this.label3.Size = new System.Drawing.Size(606, 25);
             this.label3.TabIndex = 2;
             this.label3.Text = "Добро пожаловать в игру гений-идиот! Как к вам обращаться ?";
             // 
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(215, 41);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox1.Location = new System.Drawing.Point(287, 50);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(116, 24);
+            this.textBox1.Size = new System.Drawing.Size(153, 28);
             this.textBox1.TabIndex = 3;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(109, 122);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(132, 150);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 20);
+            this.label1.Size = new System.Drawing.Size(61, 25);
             this.label1.TabIndex = 4;
             this.label1.Text = "я тут";
             this.label1.Visible = false;
@@ -72,10 +73,10 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(215, 76);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Location = new System.Drawing.Point(287, 94);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(115, 34);
+            this.button1.Size = new System.Drawing.Size(153, 42);
             this.button1.TabIndex = 5;
             this.button1.Text = "Ответить";
             this.button1.UseVisualStyleBackColor = true;
@@ -84,10 +85,10 @@
             // playButton
             // 
             this.playButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.playButton.Location = new System.Drawing.Point(215, 151);
-            this.playButton.Margin = new System.Windows.Forms.Padding(2);
+            this.playButton.Location = new System.Drawing.Point(287, 186);
+            this.playButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(115, 28);
+            this.playButton.Size = new System.Drawing.Size(153, 34);
             this.playButton.TabIndex = 6;
             this.playButton.Text = "играть";
             this.playButton.UseVisualStyleBackColor = true;
@@ -97,32 +98,44 @@
             // resultsButton
             // 
             this.resultsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.resultsButton.Location = new System.Drawing.Point(215, 184);
-            this.resultsButton.Margin = new System.Windows.Forms.Padding(2);
+            this.resultsButton.Location = new System.Drawing.Point(287, 226);
+            this.resultsButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.resultsButton.Name = "resultsButton";
-            this.resultsButton.Size = new System.Drawing.Size(115, 49);
+            this.resultsButton.Size = new System.Drawing.Size(153, 60);
             this.resultsButton.TabIndex = 7;
             this.resultsButton.Text = "смотреть результаты";
             this.resultsButton.UseVisualStyleBackColor = true;
             this.resultsButton.Visible = false;
+            this.resultsButton.Click += new System.EventHandler(this.resultsButton_Click);
             // 
             // adminButton
             // 
             this.adminButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.adminButton.Location = new System.Drawing.Point(215, 238);
-            this.adminButton.Margin = new System.Windows.Forms.Padding(2);
+            this.adminButton.Location = new System.Drawing.Point(287, 293);
+            this.adminButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.adminButton.Name = "adminButton";
-            this.adminButton.Size = new System.Drawing.Size(115, 49);
+            this.adminButton.Size = new System.Drawing.Size(153, 60);
             this.adminButton.TabIndex = 8;
             this.adminButton.Text = "вход для админа";
             this.adminButton.UseVisualStyleBackColor = true;
             this.adminButton.Visible = false;
+            this.adminButton.Click += new System.EventHandler(this.adminButton_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(489, 50);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(189, 192);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 9;
+            this.pictureBox1.TabStop = false;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(560, 326);
+            this.ClientSize = new System.Drawing.Size(747, 401);
             this.Controls.Add(this.adminButton);
             this.Controls.Add(this.resultsButton);
             this.Controls.Add(this.playButton);
@@ -130,9 +143,11 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label3);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Controls.Add(this.pictureBox1);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -147,6 +162,7 @@
         private System.Windows.Forms.Button playButton;
         private System.Windows.Forms.Button resultsButton;
         private System.Windows.Forms.Button adminButton;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

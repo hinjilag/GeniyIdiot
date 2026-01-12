@@ -38,7 +38,9 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.менюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.менюToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.новаяИграToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.смотретьРезультатыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.входДляАдминаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -103,7 +105,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(377, 28);
+            this.label1.Location = new System.Drawing.Point(314, 33);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(286, 32);
             this.label1.TabIndex = 8;
@@ -125,21 +127,38 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.менюToolStripMenuItem1});
+            this.новаяИграToolStripMenuItem,
+            this.смотретьРезультатыToolStripMenuItem,
+            this.входДляАдминаToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1067, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1067, 33);
             this.menuStrip1.TabIndex = 10;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // менюToolStripMenuItem1
+            // новаяИграToolStripMenuItem
             // 
-            this.менюToolStripMenuItem1.Name = "менюToolStripMenuItem1";
-            this.менюToolStripMenuItem1.Size = new System.Drawing.Size(65, 24);
-            this.менюToolStripMenuItem1.Text = "Меню";
-            this.менюToolStripMenuItem1.Click += new System.EventHandler(this.менюToolStripMenuItem1_Click);
+            this.новаяИграToolStripMenuItem.Name = "новаяИграToolStripMenuItem";
+            this.новаяИграToolStripMenuItem.Size = new System.Drawing.Size(120, 29);
+            this.новаяИграToolStripMenuItem.Text = "Новая игра";
+            this.новаяИграToolStripMenuItem.Click += new System.EventHandler(this.новаяИграToolStripMenuItem_Click);
+            // 
+            // смотретьРезультатыToolStripMenuItem
+            // 
+            this.смотретьРезультатыToolStripMenuItem.Name = "смотретьРезультатыToolStripMenuItem";
+            this.смотретьРезультатыToolStripMenuItem.Size = new System.Drawing.Size(200, 29);
+            this.смотретьРезультатыToolStripMenuItem.Text = "Смотреть результаты";
+            this.смотретьРезультатыToolStripMenuItem.Click += new System.EventHandler(this.смотретьРезультатыToolStripMenuItem_Click);
+            // 
+            // входДляАдминаToolStripMenuItem
+            // 
+            this.входДляАдминаToolStripMenuItem.Name = "входДляАдминаToolStripMenuItem";
+            this.входДляАдминаToolStripMenuItem.Size = new System.Drawing.Size(164, 29);
+            this.входДляАдминаToolStripMenuItem.Text = "Вход для админа";
+            this.входДляАдминаToolStripMenuItem.Click += new System.EventHandler(this.входДляАдминаToolStripMenuItem_Click);
             // 
             // PlayForm2
             // 
@@ -176,6 +195,8 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem менюToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem менюToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem новаяИграToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem смотретьРезультатыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem входДляАдминаToolStripMenuItem;
     }
 }

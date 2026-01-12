@@ -30,11 +30,12 @@ namespace GeniusOrIdiotsWindowsForms
             }
             else
             {
-                label1.Text = $"Здраствуй ,{userName} , выбери действие (введи номер)";
+                label1.Text = $"Здраствуй ,{userName} , выбери действие";
                 playButton.Visible = true;
                 resultsButton.Visible = true;
                 adminButton.Visible = true;
                 label1.Visible = true;
+                textBox1.Enabled = false;
             }
 
 
@@ -43,7 +44,21 @@ namespace GeniusOrIdiotsWindowsForms
 
         private void button2_Click(object sender, EventArgs e)
         {
-            PlayForm2 play = new PlayForm2();
+            PlayForm2 play = new PlayForm2(textBox1.Text);
+            play.Show();
+            Hide();
+        }
+
+        private void resultsButton_Click(object sender, EventArgs e)
+        {
+            ResultsForm3 play = new ResultsForm3();
+            play.Show();
+            Hide();
+        }
+
+        private void adminButton_Click(object sender, EventArgs e)
+        {
+            adminForm play = new adminForm();
             play.Show();
             Hide();
         }

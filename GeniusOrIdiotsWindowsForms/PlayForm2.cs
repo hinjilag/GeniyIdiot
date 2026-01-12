@@ -18,11 +18,18 @@ namespace GeniusOrIdiotsWindowsForms
         int сorrectAnswersCount = 0;
         int stepCount = 0;
         int randomIndex = 0;
+        string userName = "";
         double questionsCount = 6; // количество вопросов задаваемых пользователю
-        public PlayForm2()
+        public PlayForm2(string userNamePrinyal)
         {
             InitializeComponent();
+            userName = userNamePrinyal;
         }
+
+        public PlayForm2()
+        {
+        }
+
         private void PlayForm2_Load(object sender, EventArgs e)
         {
             string[] fileQuestions = File.ReadAllLines("..\\..\\..\\questions.txt");
@@ -68,8 +75,9 @@ namespace GeniusOrIdiotsWindowsForms
                 string diagnosis = DefinitDiagnosis(сorrectAnswersCount, questionsCount);
                 label1.Text = "Вы ответили на все вопросы!";
                 labelCAC.Text = $"Количество верных ответов - {сorrectAnswersCount}";
-                labelDiagnosis.Text = $"Ваш диагноз - {diagnosis}";
+                labelDiagnosis.Text = $"{userName}, твой диагноз - {diagnosis}";
                 answer.Enabled = false;
+                SaveResult(userName, сorrectAnswersCount, diagnosis);
             }
             stepCount++;
 
@@ -97,6 +105,39 @@ namespace GeniusOrIdiotsWindowsForms
         private void менюToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Form1 play = new Form1();
+            play.Show();
+            Hide();
+        }
+        static void SaveResult(string userName, int correctAnswerCount, string diagnosis)
+        {
+
+            // Формируем строку результата
+            string result = $"{userName}#{correctAnswerCount}#{diagnosis}";
+
+
+            // Записываем строку в файл
+            File.AppendAllText("..\\..\\..\\results.txt", result + Environment.NewLine);
+
+        }
+
+        private void новаяИграToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //System.Windows.Forms.Application.Restart();
+            PlayForm2 play = new PlayForm2();
+            play.Show();
+            this.Close();
+        }
+
+        private void смотретьРезультатыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ResultsForm3 play = new ResultsForm3();
+            play.Show();
+            Hide();
+        }
+
+        private void входДляАдминаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            adminForm play = new adminForm();
             play.Show();
             Hide();
         }
