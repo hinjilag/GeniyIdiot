@@ -4,17 +4,52 @@ using System.IO;
 
 namespace _12345
 {
+    public class User
+    {
+        public string Name;
+        public string Diagnoz;
+        public int CorrectAnswersCount;
+    }
+    public class Questions
+    {
+        public string Text;
+        public string Answer;        
+    }
+
+    public class QuestionsStorage
+    {
+        private string textsPath = "..\\..\\..\\questions.txt";
+        private string answersPath = "..\\..\\..\\answers.txt";
+        public List<Questions> GetAll(string textsPath) // TODO!!!
+        {
+            string[] questionsTexts = File.ReadAllLines(textsPath);
+            string[] questionsAnswers = File.ReadAllLines(answersPath);
+            List<Questions> questions = new List<Questions>();
+            for (int i = 0; i < questionsTexts.Length; i++)
+            {
+                Questions question = new Questions();
+                question.Text = questionsTexts[i];
+                question.Answer = questionsAnswers[i];
+                questions.Add(question);
+            }
+            return questions;
+        }
+    }
+
     internal class Program
     {
         static void Main(string[] args)
         {
-            double questionsCount = 0;
+            User user1 = new User();
+            double questionsCount = 3;
             Console.WriteLine("Добро пожаловать в игру гений-идиот! Как к вам обращаться ?");
-            string userName = Console.ReadLine();
+            
+            user1.Name = Console.ReadLine().Trim();
+            
             while (true)
             {
 
-                Console.WriteLine($"{userName}, выбери действие (введи номер)");
+                Console.WriteLine($"{user1.Name}, выбери действие (введи номер)");
                 Console.WriteLine();
                 Console.WriteLine("""                   
                     1) играть    
@@ -107,7 +142,7 @@ namespace _12345
 
                     //начало игры
 
-                    Console.WriteLine($"{userName}, отвечай на вопросы, и узнаешь свой диагноз");
+                    Console.WriteLine($"{user1.Name}, отвечай на вопросы, и узнаешь свой диагноз");
 
 
 
@@ -140,7 +175,7 @@ namespace _12345
                                 answers.Add(fileAnswers[i]);
                             }
 
-                            int сorrectAnswersCount = 0;
+                            user1.CorrectAnswersCount  = 0;
 
                             for (int i = 1; i <= questionsCountUser; i++) // сам тест 
                             {
@@ -151,19 +186,19 @@ namespace _12345
                                 string userAnswer = Console.ReadLine();
                                 if (answers[randomIndex] == userAnswer)
                                 {
-                                    сorrectAnswersCount++;
+                                    user1.CorrectAnswersCount++;
                                 }
 
                                 questions.RemoveAt(randomIndex);
                                 answers.RemoveAt(randomIndex);
                             }
 
-                            string diagnosis = DefinitDiagnosis(сorrectAnswersCount, questionsCountUser);
+                            user1.Diagnoz = DefinitDiagnosis(user1.CorrectAnswersCount, questionsCountUser);
                             Console.WriteLine();
 
-                            Console.WriteLine($"Количество баллов: {сorrectAnswersCount}");
-                            Console.WriteLine($"{userName}, твой диагноз: {diagnosis}");
-                            SaveResult(userName, сorrectAnswersCount, diagnosis); // сохраняем в файл
+                            Console.WriteLine($"Количество баллов: {user1.CorrectAnswersCount}");
+                            Console.WriteLine($"{user1.Name}, твой диагноз: {user1.Diagnoz}");
+                            SaveResult(user1.Name, user1.CorrectAnswersCount, user1.Diagnoz); // сохраняем в файл
 
                             Console.WriteLine();
 
@@ -208,7 +243,7 @@ namespace _12345
         {
             Console.WriteLine(text);
 
-            string answer = Console.ReadLine().ToLower();
+            string answer = Console.ReadLine().ToLower().Trim();
 
             while (true)
             {
@@ -324,10 +359,6 @@ namespace _12345
             Console.WriteLine();
 
         }
-
-
-
-
     }
 }
 
