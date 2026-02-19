@@ -52,29 +52,26 @@
             // 
             this.labelQuestion.AutoSize = true;
             this.labelQuestion.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelQuestion.Location = new System.Drawing.Point(313, 231);
-            this.labelQuestion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelQuestion.Location = new System.Drawing.Point(235, 188);
             this.labelQuestion.Name = "labelQuestion";
-            this.labelQuestion.Size = new System.Drawing.Size(282, 36);
+            this.labelQuestion.Size = new System.Drawing.Size(221, 29);
             this.labelQuestion.TabIndex = 3;
             this.labelQuestion.Text = "тут будут вопросы";
             // 
             // textBoxQuestion
             // 
-            this.textBoxQuestion.Location = new System.Drawing.Point(320, 314);
-            this.textBoxQuestion.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxQuestion.Location = new System.Drawing.Point(240, 255);
             this.textBoxQuestion.Multiline = true;
             this.textBoxQuestion.Name = "textBoxQuestion";
-            this.textBoxQuestion.Size = new System.Drawing.Size(469, 36);
+            this.textBoxQuestion.Size = new System.Drawing.Size(353, 30);
             this.textBoxQuestion.TabIndex = 4;
             // 
             // answer
             // 
             this.answer.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.answer.Location = new System.Drawing.Point(383, 386);
-            this.answer.Margin = new System.Windows.Forms.Padding(4);
+            this.answer.Location = new System.Drawing.Point(287, 314);
             this.answer.Name = "answer";
-            this.answer.Size = new System.Drawing.Size(317, 63);
+            this.answer.Size = new System.Drawing.Size(238, 51);
             this.answer.TabIndex = 5;
             this.answer.Text = "ответить";
             this.answer.UseVisualStyleBackColor = true;
@@ -84,10 +81,9 @@
             // 
             this.labelDiagnosis.AutoSize = true;
             this.labelDiagnosis.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelDiagnosis.Location = new System.Drawing.Point(313, 166);
-            this.labelDiagnosis.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelDiagnosis.Location = new System.Drawing.Point(235, 135);
             this.labelDiagnosis.Name = "labelDiagnosis";
-            this.labelDiagnosis.Size = new System.Drawing.Size(176, 31);
+            this.labelDiagnosis.Size = new System.Drawing.Size(140, 25);
             this.labelDiagnosis.TabIndex = 6;
             this.labelDiagnosis.Text = "Ваш диагноз";
             this.labelDiagnosis.Visible = false;
@@ -96,10 +92,9 @@
             // 
             this.labelCAC.AutoSize = true;
             this.labelCAC.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelCAC.Location = new System.Drawing.Point(313, 86);
-            this.labelCAC.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelCAC.Location = new System.Drawing.Point(235, 70);
             this.labelCAC.Name = "labelCAC";
-            this.labelCAC.Size = new System.Drawing.Size(422, 31);
+            this.labelCAC.Size = new System.Drawing.Size(339, 25);
             this.labelCAC.TabIndex = 7;
             this.labelCAC.Text = "Количество правильных ответов";
             this.labelCAC.Visible = false;
@@ -108,9 +103,10 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(314, 33);
+            this.label1.Location = new System.Drawing.Point(236, 27);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(286, 32);
+            this.label1.Size = new System.Drawing.Size(222, 26);
             this.label1.TabIndex = 8;
             this.label1.Text = "Отвечай на вопросы";
             // 
@@ -120,12 +116,12 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.менюToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(121, 28);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(109, 26);
             // 
             // менюToolStripMenuItem
             // 
             this.менюToolStripMenuItem.Name = "менюToolStripMenuItem";
-            this.менюToolStripMenuItem.Size = new System.Drawing.Size(120, 24);
+            this.менюToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.менюToolStripMenuItem.Text = "Меню";
             // 
             // menuStrip1
@@ -138,46 +134,48 @@
             this.входДляАдминаToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1067, 33);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(800, 28);
             this.menuStrip1.TabIndex = 10;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // новаяИграToolStripMenuItem
             // 
             this.новаяИграToolStripMenuItem.Name = "новаяИграToolStripMenuItem";
-            this.новаяИграToolStripMenuItem.Size = new System.Drawing.Size(120, 29);
+            this.новаяИграToolStripMenuItem.Size = new System.Drawing.Size(101, 24);
             this.новаяИграToolStripMenuItem.Text = "Новая игра";
             this.новаяИграToolStripMenuItem.Click += new System.EventHandler(this.новаяИграToolStripMenuItem_Click);
             // 
             // смотретьРезультатыToolStripMenuItem
             // 
             this.смотретьРезультатыToolStripMenuItem.Name = "смотретьРезультатыToolStripMenuItem";
-            this.смотретьРезультатыToolStripMenuItem.Size = new System.Drawing.Size(200, 29);
+            this.смотретьРезультатыToolStripMenuItem.Size = new System.Drawing.Size(169, 24);
             this.смотретьРезультатыToolStripMenuItem.Text = "Смотреть результаты";
             this.смотретьРезультатыToolStripMenuItem.Click += new System.EventHandler(this.смотретьРезультатыToolStripMenuItem_Click);
             // 
             // входДляАдминаToolStripMenuItem
             // 
             this.входДляАдминаToolStripMenuItem.Name = "входДляАдминаToolStripMenuItem";
-            this.входДляАдминаToolStripMenuItem.Size = new System.Drawing.Size(164, 29);
+            this.входДляАдминаToolStripMenuItem.Size = new System.Drawing.Size(139, 24);
             this.входДляАдминаToolStripMenuItem.Text = "Вход для админа";
             this.входДляАдминаToolStripMenuItem.Click += new System.EventHandler(this.входДляАдминаToolStripMenuItem_Click);
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(12, 86);
+            this.pictureBox1.Location = new System.Drawing.Point(9, 70);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(278, 151);
+            this.pictureBox1.Size = new System.Drawing.Size(208, 123);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 11;
             this.pictureBox1.TabStop = false;
             // 
             // PlayForm2
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.label1);
@@ -187,7 +185,6 @@
             this.Controls.Add(this.textBoxQuestion);
             this.Controls.Add(this.labelQuestion);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "PlayForm2";
             this.Text = "PlayForm2";
             this.Load += new System.EventHandler(this.PlayForm2_Load);
