@@ -10,29 +10,75 @@ namespace _12345
         public string Diagnoz;
         public int CorrectAnswersCount;
     }
-    public class Questions
+
+    public class UserStorage
+    {
+        private string path = "..//..//..//results.txt";
+        public void SaveRecord(User user)
+        {
+            string formatRecord = $"{user.Name}#{user.Diagnoz}#{user.CorrectAnswersCount}";
+            File.AppendAllText(path, formatRecord + Environment.NewLine);
+        }
+    }
+
+    public class Question
     {
         public string Text;
-        public string Answer;        
+        public string Answer;
     }
 
     public class QuestionsStorage
     {
-        private string textsPath = "..\\..\\..\\questions.txt";
-        private string answersPath = "..\\..\\..\\answers.txt";
-        public List<Questions> GetAll(string textsPath) // TODO!!!
+        string textsPath = "..//..//..//questions.txt";
+        string answersPath = "..//..//..//answers.txt";
+
+        public List<Question> GetAll()
         {
             string[] questionsTexts = File.ReadAllLines(textsPath);
             string[] questionsAnswers = File.ReadAllLines(answersPath);
-            List<Questions> questions = new List<Questions>();
+            List<Question> questions = new List<Question>();
             for (int i = 0; i < questionsTexts.Length; i++)
             {
-                Questions question = new Questions();
+                Question question = new Question();
                 question.Text = questionsTexts[i];
                 question.Answer = questionsAnswers[i];
                 questions.Add(question);
             }
             return questions;
+        }
+
+        // Новый метод для проведения тестирования
+        public int AskQuestions(User user, int questionsCount)
+        {
+            List<Question> allQuestions = GetAll();
+            List<Question> questionsForTest = new List<Question>(allQuestions);
+
+            int correctAnswers = 0;
+
+            for (int i = 1; i <= questionsCount; i++)
+            {
+                // Выбираем случайный вопрос
+                int randomIndex = new Random().Next(0, questionsForTest.Count);
+                Question currentQuestion = questionsForTest[randomIndex];
+
+                // Задаем вопрос пользователю
+                Console.Write($"{i}) ");
+                Console.WriteLine(currentQuestion.Text);
+
+                // Получаем ответ
+                string userAnswer = Console.ReadLine();
+
+                // Проверяем правильность
+                if (currentQuestion.Answer == userAnswer)
+                {
+                    correctAnswers++;
+                }
+
+                // Удаляем использованный вопрос
+                questionsForTest.RemoveAt(randomIndex);
+            }
+
+            return correctAnswers;
         }
     }
 
@@ -43,9 +89,9 @@ namespace _12345
             User user1 = new User();
             double questionsCount = 3;
             Console.WriteLine("Добро пожаловать в игру гений-идиот! Как к вам обращаться ?");
-            
+
             user1.Name = Console.ReadLine().Trim();
-            
+
             while (true)
             {
 
@@ -144,8 +190,6 @@ namespace _12345
 
                     Console.WriteLine($"{user1.Name}, отвечай на вопросы, и узнаешь свой диагноз");
 
-
-
                     bool isYes = YesOrNo("Готов ?");
 
                     Console.WriteLine();
@@ -154,44 +198,15 @@ namespace _12345
                     {
                         Console.WriteLine();
                     }
-                    else 
+                    else
                     {
                         while (true)
                         {
-                            // вопросы
-                            string[] fileQuestions = File.ReadAllLines("..\\..\\..\\questions.txt");
-                            List<string> questions = new List<string>() { };
-                            for (int i = 0; i < fileQuestions.Length; i++) // проходимся по строкам
-                            {
-                                questions.Add(fileQuestions[i]);
-                            }
+                            // Создаем объект для работы с вопросами
+                            QuestionsStorage questionsStorage = new QuestionsStorage();
 
-
-                            // ответы
-                            string[] fileAnswers = File.ReadAllLines("..\\..\\..\\answers.txt");
-                            List<string> answers = new List<string>() { };
-                            for (int i = 0; i < fileAnswers.Length; i++)
-                            {
-                                answers.Add(fileAnswers[i]);
-                            }
-
-                            user1.CorrectAnswersCount  = 0;
-
-                            for (int i = 1; i <= questionsCountUser; i++) // сам тест 
-                            {
-                                int randomIndex = new Random().Next(0, questions.Count);
-                                Console.Write($"{i}) ");
-                                Console.WriteLine(questions[randomIndex]);
-
-                                string userAnswer = Console.ReadLine();
-                                if (answers[randomIndex] == userAnswer)
-                                {
-                                    user1.CorrectAnswersCount++;
-                                }
-
-                                questions.RemoveAt(randomIndex);
-                                answers.RemoveAt(randomIndex);
-                            }
+                            // Задаем вопросы и получаем количество правильных ответов
+                            user1.CorrectAnswersCount = questionsStorage.AskQuestions(user1, (int)questionsCountUser);
 
                             user1.Diagnoz = DefinitDiagnosis(user1.CorrectAnswersCount, questionsCountUser);
                             Console.WriteLine();
@@ -209,14 +224,10 @@ namespace _12345
                                 Console.WriteLine();
                                 break;
                             }
-
                         }
-
                     }
-
                 }
             }
-
         }
 
         static string DefinitDiagnosis(int сorrectAnswersCount, double questionsCount)
@@ -361,5 +372,3 @@ namespace _12345
         }
     }
 }
-
-
