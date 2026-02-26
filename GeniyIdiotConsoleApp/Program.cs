@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Intrinsics.X86;
 
 namespace _12345
 {
@@ -10,7 +11,7 @@ namespace _12345
         static void Main(string[] args)
         {
             User user1 = new User();
-            double questionsCount = 3;
+            int questionsCount = 3;
             Console.WriteLine("Добро пожаловать в игру гений-идиот! Как к вам обращаться ?");
 
             user1.Name = Console.ReadLine().Trim();
@@ -26,7 +27,7 @@ namespace _12345
                     3) вход для админа    
                     0) выйти из игры
                     """);
-                string messageMenu = Console.ReadLine();
+                string messageMenu = Console.ReadLine().Trim();
                 if (messageMenu == "0")
                 {
                     return;
@@ -48,20 +49,13 @@ namespace _12345
 
                         while (true)
                         {
-                            Console.WriteLine("Что хочешь сделать?");
-                            Console.WriteLine("""
-                                1) добавить вопрос
-                                2) удалить вопрос
-                                3) изменить количество вопросов задаваемых пользователю
-                                4) отчистить результаты
-                                0) выход из админки
-                                """);
-                            string actionAdm = Console.ReadLine();
+
+                            string actionAdm = MenuCheck(user1);
                             if (actionAdm == "0")
                             {
                                 break;
                             }
-                            if (actionAdm == "1")
+                            if (actionAdm == "1") // добавить вопрос 
                             {
                                 AddQuestion();
                             }
@@ -71,32 +65,14 @@ namespace _12345
                                 DeleteQuestion();
 
                             }
-                            if (actionAdm == "3")
+                            if (actionAdm == "3") // количество задаваемых вопросов
                             {
-                                Console.WriteLine("Сколько вопросов задать пользователю?");
-                                questionsCount = Convert.ToInt32(Console.ReadLine());
-                                string[] fileQuestions = File.ReadAllLines("..\\..\\..\\questions.txt");
-                                List<string> questions = new List<string>() { };
-                                for (int i = 0; i < fileQuestions.Length; i++) // проходимся по строкам
-                                {
-                                    questions.Add(fileQuestions[i]);
-                                }
-                                while (questionsCount <= 0 || questionsCount > questions.Count)
-                                {
-                                    Console.WriteLine($"Столько вопросов нет! Введи число от 1 до {questions.Count}");
-                                    questionsCount = Convert.ToInt32(Console.ReadLine());
-                                }
-                                Console.WriteLine();
-                                Console.WriteLine($"Количество вопросов, которые будут заданы пользователю: {questionsCount}");
-                                Console.WriteLine();
+                                questionsCount = QuestionCountAsk();
                             }
-                            if (actionAdm == "4")
+                            if (actionAdm == "4") // очистить результаты
                             {
-                                Console.WriteLine();
-                                File.WriteAllText("..\\..\\..\\results.txt", "");
-                                Console.WriteLine("Результаты успешно отчищены!");
+                                ResultsDelete();
                             }
-
                         }
                     }
                     else
@@ -107,7 +83,7 @@ namespace _12345
                 if (messageMenu == "1")
                 {
                     // сколько вопросов будут выданы пользователю
-                    double questionsCountUser = questionsCount;
+                    int questionsCountUser = questionsCount;
 
                     //начало игры
 
@@ -125,10 +101,10 @@ namespace _12345
                     {
                         while (true)
                         {
-                            // Создаем объект для работы с вопросами
+                            
                             QuestionsStorage questionsStorage = new QuestionsStorage();
 
-                            // Задаем вопросы и получаем количество правильных ответов
+                            // задаем вопросы и получаем количество правильных ответов
                             user1.CorrectAnswersCount = questionsStorage.AskQuestions(user1, (int)questionsCountUser);
 
                             user1.Diagnoz = DefinitDiagnosis(user1.CorrectAnswersCount, questionsCountUser);
@@ -136,7 +112,9 @@ namespace _12345
 
                             Console.WriteLine($"Количество баллов: {user1.CorrectAnswersCount}");
                             Console.WriteLine($"{user1.Name}, твой диагноз: {user1.Diagnoz}");
-                            SaveResult(user1.Name, user1.CorrectAnswersCount, user1.Diagnoz); // сохраняем в файл
+                            UserStorage userStorage = new UserStorage();
+
+                            userStorage.SaveRecord(user1); // сохраняем в файл
 
                             Console.WriteLine();
 
@@ -192,22 +170,12 @@ namespace _12345
                 }
                 Console.WriteLine("Такого варианта нет. Введи да или нет!");
 
-                answer = Console.ReadLine();
+                answer = Console.ReadLine().ToLower().Trim();
             }
 
         }
 
-        static void SaveResult(string userName, int correctAnswerCount, string diagnosis)
-        {
-
-            // Формируем строку результата
-            string result = $"{userName}#{correctAnswerCount}#{diagnosis}";
-
-
-            // Записываем строку в файл
-            File.AppendAllText("..\\..\\..\\results.txt", result + Environment.NewLine);
-
-        }
+       
 
         // 2) смотреть результаты 
         static void SeeResults()
@@ -292,6 +260,46 @@ namespace _12345
             Console.WriteLine("Вопрос успешно удален!");
             Console.WriteLine();
 
+        }
+        static string MenuCheck(User user)
+        {
+            User user1 = new User();
+            Console.WriteLine($"{user1.Name}, выбери действие (введи номер)");
+            Console.WriteLine();
+            Console.WriteLine("""                   
+                    1) играть    
+                    2) смотреть результаты     
+                    3) вход для админа    
+                    0) выйти из игры
+                    """);
+            string actionAdm = Console.ReadLine().Trim();
+            return actionAdm;
+        }
+        static int QuestionCountAsk()
+        {
+            Console.WriteLine("Сколько вопросов задать пользователю?");
+            int questionsCount = Convert.ToInt32(Console.ReadLine());
+            string[] fileQuestions = File.ReadAllLines("..\\..\\..\\questions.txt");
+            List<string> questions = new List<string>() { };
+            for (int i = 0; i < fileQuestions.Length; i++) // проходимся по строкам
+            {
+                questions.Add(fileQuestions[i]);
+            }
+            while (questionsCount <= 0 || questionsCount > questions.Count)
+            {
+                Console.WriteLine($"Столько вопросов нет! Введи число от 1 до {questions.Count}");
+                questionsCount = Convert.ToInt32(Console.ReadLine());
+            }
+            Console.WriteLine();
+            Console.WriteLine($"Количество вопросов, которые будут заданы пользователю: {questionsCount}");
+            Console.WriteLine();
+            return questionsCount;
+        }
+        static void ResultsDelete()
+        {
+            Console.WriteLine();
+            File.WriteAllText("..\\..\\..\\results.txt", "");
+            Console.WriteLine("Результаты успешно отчищены!");
         }
     }
 }

@@ -20,7 +20,7 @@
             return questions;
         }
 
-        // Новый метод для проведения тестирования
+        // спрашивай!!!
         public int AskQuestions(User user, int questionsCount)
         {
             List<Question> allQuestions = GetAll();
@@ -30,28 +30,45 @@
 
             for (int i = 1; i <= questionsCount; i++)
             {
-                // Выбираем случайный вопрос
+                // выбираем случайный вопрос
                 int randomIndex = new Random().Next(0, questionsForTest.Count);
                 Question currentQuestion = questionsForTest[randomIndex];
 
-                // Задаем вопрос пользователю
+                // задаем вопрос пользователю
                 Console.Write($"{i}) ");
                 Console.WriteLine(currentQuestion.Text);
 
-                // Получаем ответ
+                // получаем ответ
                 string userAnswer = Console.ReadLine();
 
-                // Проверяем правильность
+                // проверяем правильность
                 if (currentQuestion.Answer == userAnswer)
                 {
                     correctAnswers++;
                 }
 
-                // Удаляем использованный вопрос
+                // удаляем заданный вопрос
                 questionsForTest.RemoveAt(randomIndex);
             }
 
             return correctAnswers;
+        }
+
+        public void DeleteQuestion()
+        {
+            string[] fileQuestions = File.ReadAllLines("..\\..\\..\\questions.txt");
+            List<string> questions = new List<string>() { };
+            for (int i = 0; i < fileQuestions.Length; i++) // проходимся по строкам
+            {
+                questions.Add(fileQuestions[i]);
+            }
+
+            string[] fileAnswers = File.ReadAllLines("..\\..\\..\\answers.txt");
+            List<string> answers = new List<string>() { };
+            for (int i = 0; i < fileAnswers.Length; i++) // проходимся по строкам
+            {
+                answers.Add(fileAnswers[i]);
+            }
         }
     }
 }
