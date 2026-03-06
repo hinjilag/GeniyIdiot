@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Intrinsics.X86;
 
 namespace _12345
 {
-
     internal class Program
     {
         static void Main(string[] args)
         {
             User user1 = new User();
             int questionsCount = 3;
-            Console.WriteLine("Добро пожаловать в игру гений-идиот! Как к вам обращаться ?");
 
+            Console.WriteLine("Добро пожаловать в игру гений-идиот! Как к вам обращаться?");
             user1.Name = Console.ReadLine().Trim();
 
             while (true)
             {
-
                 Console.WriteLine($"{user1.Name}, выбери действие (введи номер)");
                 Console.WriteLine();
                 Console.WriteLine("""                   
@@ -27,49 +24,55 @@ namespace _12345
                     3) вход для админа    
                     0) выйти из игры
                     """);
+
                 string messageMenu = Console.ReadLine().Trim();
+
                 if (messageMenu == "0")
                 {
                     return;
                 }
-                if (messageMenu == "2")
+                else if (messageMenu == "2")
                 {
                     SeeResults();
                 }
-
-                if (messageMenu == "3") // админка
+                else if (messageMenu == "3") // админка
                 {
-
                     Console.WriteLine("введите пароль");
                     string password = Console.ReadLine();
+
                     if (password == "123")
                     {
                         Console.WriteLine();
-                        Console.WriteLine("Здраствуй, админ!");
+                        Console.WriteLine("Здравствуй, админ!");
 
                         while (true)
                         {
+                            Console.WriteLine("Выберите действие:");
+                            Console.WriteLine("1) Добавить вопрос");
+                            Console.WriteLine("2) Удалить вопрос");
+                            Console.WriteLine("3) Изменить количество вопросов");
+                            Console.WriteLine("4) Очистить результаты");
+                            Console.WriteLine("0) Выйти из админки");
 
-                            string actionAdm = MenuCheck(user1);
+                            string actionAdm = Console.ReadLine().Trim();
+
                             if (actionAdm == "0")
                             {
                                 break;
                             }
-                            if (actionAdm == "1") // добавить вопрос 
+                            else if (actionAdm == "1") // добавить вопрос 
                             {
                                 AddQuestion();
                             }
-
-                            if (actionAdm == "2") // удалить вопрос
+                            else if (actionAdm == "2") // удалить вопрос
                             {
                                 DeleteQuestion();
-
                             }
-                            if (actionAdm == "3") // количество задаваемых вопросов
+                            else if (actionAdm == "3") // количество задаваемых вопросов
                             {
                                 questionsCount = QuestionCountAsk();
                             }
-                            if (actionAdm == "4") // очистить результаты
+                            else if (actionAdm == "4") // очистить результаты
                             {
                                 ResultsDelete();
                             }
@@ -77,111 +80,139 @@ namespace _12345
                     }
                     else
                     {
-                        Console.WriteLine("пароль неверный!");
+                        Console.WriteLine("Пароль неверный!");
                     }
                 }
-                if (messageMenu == "1")
+                else if (messageMenu == "1")
                 {
-                    // сколько вопросов будут выданы пользователю
-                    int questionsCountUser = questionsCount;
-
-                    //начало игры
-
-                    Console.WriteLine($"{user1.Name}, отвечай на вопросы, и узнаешь свой диагноз");
-
-                    bool isYes = YesOrNo("Готов ?");
-
-                    Console.WriteLine();
-
-                    if (isYes == false)
-                    {
-                        Console.WriteLine();
-                    }
-                    else
-                    {
-                        while (true)
-                        {
-                            
-                            QuestionsStorage questionsStorage = new QuestionsStorage();
-
-                            // задаем вопросы и получаем количество правильных ответов
-                            user1.CorrectAnswersCount = questionsStorage.AskQuestions(user1, (int)questionsCountUser);
-
-                            user1.Diagnoz = DefinitDiagnosis(user1.CorrectAnswersCount, questionsCountUser);
-                            Console.WriteLine();
-
-                            Console.WriteLine($"Количество баллов: {user1.CorrectAnswersCount}");
-                            Console.WriteLine($"{user1.Name}, твой диагноз: {user1.Diagnoz}");
-                            UserStorage userStorage = new UserStorage();
-
-                            userStorage.SaveRecord(user1); // сохраняем в файл
-
-                            Console.WriteLine();
-
-                            isYes = YesOrNo("Сыграем еще раз?");
-                            if (isYes == false)
-                            {
-                                Console.WriteLine("джабах ут");
-                                Console.WriteLine();
-                                break;
-                            }
-                        }
-                    }
+                    
+                    PlayGame(user1, questionsCount); // спрашивай!!!
                 }
             }
         }
 
-        static string DefinitDiagnosis(int сorrectAnswersCount, double questionsCount)
+        
+        static void PlayGame(User user, int questionsCount)
         {
+            Console.WriteLine($"{user.Name}, отвечай на вопросы и узнаешь свой диагноз");
 
-            double range = questionsCount / 6;
-            string diagnoz = "";
-            if (сorrectAnswersCount < range)
-                diagnoz = "бедолага";
-            else if (сorrectAnswersCount < 2 * range)
-                diagnoz = "дурак";
-            else if (сorrectAnswersCount < 3 * range)
-                diagnoz = "дурик";
-            else if (сorrectAnswersCount < 4 * range)
-                diagnoz = "жить будешь";
-            else if (сorrectAnswersCount < 5 * range)
-                diagnoz = "тип";
+            bool isReady = YesOrNo("Готов?");
+
+            if (!isReady)
+            {
+                Console.WriteLine("А че пришел тогда");
+                return;
+            }
+
+            while (true)
+            {
+                // Получаем случайные вопросы
+                List<Question> randomQuestions = QuestionsStorage.GetRandomQuestions(questionsCount);
+
+                if (randomQuestions.Count == 0)
+                {
+                    Console.WriteLine("Вопросов в базе данных нет. Обратитесь к хынджылагу");
+                    return;
+                }
+
+                
+                List<string> userAnswers = new List<string>(); // тут хранятся ответы юзера
+
+                Console.WriteLine("Поехали!");
+                Console.WriteLine();
+
+                // задаем вопросы, записываем ответы 
+                for (int i = 0; i < randomQuestions.Count; i++)
+                {
+                    Console.WriteLine($"Вопрос {i + 1} из {randomQuestions.Count}:");
+                    Console.WriteLine(randomQuestions[i].Text);
+                    Console.Write("Ваш ответ: ");
+
+                    string userAnswer = Console.ReadLine();
+                    userAnswers.Add(userAnswer);
+                    Console.WriteLine();
+                }
+
+                
+                int correctAnswers = QuestionsStorage.AskQuestions(randomQuestions, userAnswers);
+
+                // создаем нового типа для сохранения результатов 
+                User resultUser = new User
+                {
+                    Name = user.Name,
+                    CorrectAnswersCount = correctAnswers,
+                    Diagnoz = DefinitDiagnosis(correctAnswers, questionsCount)
+                };
+
+                // Выводим результаты
+                Console.WriteLine("        Результаты теста        ");
+                Console.WriteLine($"Количество правильных ответов: {correctAnswers} из {questionsCount}");
+                Console.WriteLine($"{user.Name}, ваш диагноз: {resultUser.Diagnoz}!");
+
+                
+                UserStorage userStorage = new UserStorage();
+                userStorage.SaveToFile(resultUser);
+
+                Console.WriteLine("Результаты сохранены!");
+                Console.WriteLine();
+
+                
+                bool playAgain = YesOrNo("Сыграем еще раз?");
+
+                if (!playAgain)
+                {
+                    Console.WriteLine("До свидания!");
+                    Console.WriteLine();
+                    break;
+                }
+
+                Console.Clear();
+            }
+        }
+
+        static string DefinitDiagnosis(int correctAnswersCount, int questionsCount)
+        {
+            double range = questionsCount / 6.0;
+
+            if (correctAnswersCount < range)
+                return "бедолага";
+            else if (correctAnswersCount < 2 * range)
+                return "дурак";
+            else if (correctAnswersCount < 3 * range)
+                return "дурик";
+            else if (correctAnswersCount < 4 * range)
+                return "жить будешь";
+            else if (correctAnswersCount < 5 * range)
+                return "тип";
             else
-                diagnoz = "тынг тип!!!";
-            return diagnoz;
+                return "тынг тип!!!";
         }
 
         static bool YesOrNo(string text)
         {
-            Console.WriteLine(text);
-
-            string answer = Console.ReadLine().ToLower().Trim();
-
             while (true)
             {
-                if (answer == "да")
+                Console.Write($"{text} (да/нет): ");
+                string answer = Console.ReadLine().ToLower().Trim();
+
+                if (answer == "да"  || answer == "yes" )
                 {
                     return true;
                 }
-
-                if (answer == "нет")
+                else if (answer == "нет"  || answer == "no" )
                 {
                     return false;
                 }
+
                 Console.WriteLine("Такого варианта нет. Введи да или нет!");
-
-                answer = Console.ReadLine().ToLower().Trim();
             }
-
         }
-
-       
 
         // 2) смотреть результаты 
         static void SeeResults()
         {
             Console.WriteLine("пользователь    К.В.О.   диагноз");
-            string[] fileData = File.ReadAllLines("..\\..\\..\\results.txt");
+            string[] fileData = FileStorage.ReadAllLines("results");
 
             for (int i = 0; i < fileData.Length; i++) // fileData.Length = количество строк в файле
             {
@@ -191,115 +222,89 @@ namespace _12345
 
             }
             Console.WriteLine();
+
         }
 
         static void AddQuestion() // добавить вопрос
         {
-            Console.WriteLine("Напиши вопрос который хочешь добавить.");
-            Console.WriteLine("Для отмены нажми  0");
+            Console.WriteLine("Напиши вопрос, который хочешь добавить.");
+            Console.WriteLine("Для отмены нажми 0");
             string addQuestion = Console.ReadLine().Trim();
+
             if (addQuestion == "0")
             {
                 return;
             }
-            Console.WriteLine();
-            File.AppendAllText("..\\..\\..\\questions.txt", addQuestion + Environment.NewLine);
+
             Console.WriteLine("Напиши ответ на этот вопрос");
             string addAnswer = Console.ReadLine().Trim();
-            File.AppendAllText("..\\..\\..\\answers.txt", addAnswer + Environment.NewLine);
-            Console.WriteLine();
+
+            FileStorage.AppendAllText(addQuestion, addAnswer);
+
             Console.WriteLine("Вопрос успешно добавлен!");
         }
 
         static void DeleteQuestion() // удалить вопрос
         {
-            Console.WriteLine("Напиши номер вопроса которого хочешь удалить");
-            Console.WriteLine();
+            string[] fileQuestions = FileStorage.ReadAllLines("questions");
 
-            string[] fileQuestions = File.ReadAllLines("..\\..\\..\\questions.txt");
-            List<string> questions = new List<string>() { };
-            for (int i = 0; i < fileQuestions.Length; i++) // проходимся по строкам
+            if (fileQuestions.Length == 0)
             {
-                questions.Add(fileQuestions[i]);
+                Console.WriteLine("Нет вопросов для удаления");
+                return;
             }
 
-            string[] fileAnswers = File.ReadAllLines("..\\..\\..\\answers.txt");
-            List<string> answers = new List<string>() { };
-            for (int i = 0; i < fileAnswers.Length; i++) // проходимся по строкам
+            Console.WriteLine("Выбери номер вопроса, который хочешь удалить:");
+
+            for (int i = 0; i < fileQuestions.Length; i++)
             {
-                answers.Add(fileAnswers[i]);
+                Console.WriteLine($"{i + 1}) {fileQuestions[i]}");
             }
 
+            string input = Console.ReadLine();
 
-            for (int i = 1; i <= fileQuestions.Length; i++) // выводим вопросы чтоб тип выбрал
+            if (!int.TryParse(input, out int deleteQuestion) ||
+                deleteQuestion < 1 ||
+                deleteQuestion > fileQuestions.Length)
             {
-                Console.Write($"{i}) ");
-                Console.WriteLine(fileQuestions[i - 1]);
+                Console.WriteLine("такого вопроса нет");
+                return;
             }
 
-            string deleteQuestionStr = Console.ReadLine();
+            List<string> questions = new List<string>(FileStorage.ReadAllLines("questions"));
+            List<string> answers = new List<string>(FileStorage.ReadAllLines("answers"));
 
-            while (!double.TryParse(deleteQuestionStr, out _))
-            {
-                Console.WriteLine();
-                Console.WriteLine("Введи число!");
-                Console.WriteLine();
-                deleteQuestionStr = Console.ReadLine();
-            }
-            int deleteQuestion = Convert.ToInt32(deleteQuestionStr);
-            while (deleteQuestion <= 0 || deleteQuestion > questions.Count)
-            {
-                Console.WriteLine("Вопроса под таким номером нет! Введи номер вопроса из выданных");
-                deleteQuestion = Convert.ToInt32(Console.ReadLine());
-            }
             questions.RemoveAt(deleteQuestion - 1);
             answers.RemoveAt(deleteQuestion - 1);
-            File.WriteAllLines("..\\..\\..\\questions.txt", questions);
-            File.WriteAllLines("..\\..\\..\\answers.txt", answers);
-            Console.WriteLine();
-            Console.WriteLine("Вопрос успешно удален!");
-            Console.WriteLine();
 
+            FileStorage.WriteAllLines(questions, answers);
+            
+
+            Console.WriteLine("Вопрос успешно удален!");
         }
-        static string MenuCheck(User user)
-        {
-            User user1 = new User();
-            Console.WriteLine($"{user1.Name}, выбери действие (введи номер)");
-            Console.WriteLine();
-            Console.WriteLine("""                   
-                    1) играть    
-                    2) смотреть результаты     
-                    3) вход для админа    
-                    0) выйти из игры
-                    """);
-            string actionAdm = Console.ReadLine().Trim();
-            return actionAdm;
-        }
+
         static int QuestionCountAsk()
         {
-            Console.WriteLine("Сколько вопросов задать пользователю?");
-            int questionsCount = Convert.ToInt32(Console.ReadLine());
-            string[] fileQuestions = File.ReadAllLines("..\\..\\..\\questions.txt");
-            List<string> questions = new List<string>() { };
-            for (int i = 0; i < fileQuestions.Length; i++) // проходимся по строкам
+            string[] fileQuestions = FileStorage.ReadAllLines("questions");
+
+            Console.WriteLine($"Сколько вопросов задать пользователю? (максимум {fileQuestions.Length})");
+
+            int questionsCount;
+            while (!int.TryParse(Console.ReadLine(), out questionsCount) ||
+                   questionsCount <= 0 ||
+                   questionsCount > fileQuestions.Length)
             {
-                questions.Add(fileQuestions[i]);
+                Console.WriteLine($"Столько вопросов нет! Введи число от 1 до {fileQuestions.Length}");
             }
-            while (questionsCount <= 0 || questionsCount > questions.Count)
-            {
-                Console.WriteLine($"Столько вопросов нет! Введи число от 1 до {questions.Count}");
-                questionsCount = Convert.ToInt32(Console.ReadLine());
-            }
-            Console.WriteLine();
+
             Console.WriteLine($"Количество вопросов, которые будут заданы пользователю: {questionsCount}");
-            Console.WriteLine();
             return questionsCount;
         }
+
         static void ResultsDelete()
         {
-            Console.WriteLine();
-            File.WriteAllText("..\\..\\..\\results.txt", "");
-            Console.WriteLine("Результаты успешно отчищены!");
+            FileStorage.ClearResults();
+            Console.WriteLine("Результаты успешно очищены!");
         }
     }
 }

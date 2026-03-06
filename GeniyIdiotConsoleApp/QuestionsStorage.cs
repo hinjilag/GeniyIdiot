@@ -2,15 +2,43 @@
 {
     public class QuestionsStorage
     {
-        private string textsPath = "..//..//..//questions.txt";
-        private string answersPath = "..//..//..//answers.txt";
+        public static string textsPath = "..//..//..//questions.txt";
+        public static string answersPath = "..//..//..//answers.txt";
+        public static string resultsPath = "..//..//..//results.txt";
 
-        public List<Question> GetAll()
+
+        public static List<Question> GetAll()
         {
-            return Question.GetAll(textsPath, answersPath);
+
+            string[] questionsTexts = File.ReadAllLines(textsPath);
+            string[] questionsAnswers = File.ReadAllLines(answersPath);
+
+            List<Question> questions = new List<Question>();
+            for (int i = 0; i < questionsTexts.Length; i++)
+            {
+                Question question = new Question();
+                question.Text = questionsTexts[i];
+                question.Answer = questionsAnswers[i];
+                questions.Add(question);
+            }
+            return questions;
+        }
+        public static void SaveToFiles(List<Question> questions, string textsPath, string answersPath)
+        {
+            List<string> texts = new List<string>();
+            List<string> answers = new List<string>();
+
+            foreach (Question question in questions)
+            {
+                texts.Add(question.Text);
+                answers.Add(question.Answer);
+            }
+
+            File.WriteAllLines(textsPath, texts);
+            File.WriteAllLines(answersPath, answers);
         }
 
-        public int AskQuestions(List<Question> questionsForTest, List<string> userAnswers)
+        public static int AskQuestions(List<Question> questionsForTest, List<string> userAnswers)
         {
             int correctAnswers = 0;
 
@@ -25,13 +53,13 @@
             return correctAnswers;
         }
 
-        public List<Question> GetRandomQuestions(int count)
+        public static List<Question> GetRandomQuestions(int count)
         {
-            List<Question> allQuestions = GetAll();
-            List<Question> randomQuestions = new List<Question>();
+            List<Question> allQuestions = GetAll(); // все вопросы 
+            List<Question> randomQuestions = new List<Question>(); // пустой лист с потенциально заданными вопросами 
             Random random = new Random();
 
-            List<Question> tempList = new List<Question>(allQuestions);
+            List<Question> tempList = new List<Question>(allQuestions); 
 
             for (int i = 0; i < count && tempList.Count > 0; i++)
             {
@@ -45,12 +73,12 @@
 
         public bool DeleteQuestion(int questionNumber)
         {
-            List<Question> questions = Question.GetAll(textsPath, answersPath);
-
+            List<Question> questions = GetAll();
+            
             if (questionNumber >= 0 && questionNumber < questions.Count)
             {
                 questions.RemoveAt(questionNumber);
-                Question.SaveToFiles(questions, textsPath, answersPath);
+                QuestionsStorage.SaveToFiles(questions, textsPath, answersPath);
                 return true;
             }
 
@@ -61,5 +89,7 @@
         {
             return GetAll().Count;
         }
+
+        
     }
 }
