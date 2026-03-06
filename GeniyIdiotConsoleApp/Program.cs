@@ -161,7 +161,7 @@ namespace _12345
 
                 if (!playAgain)
                 {
-                    Console.WriteLine("До свидания!");
+                    Console.WriteLine("джабахут тогда");
                     Console.WriteLine();
                     break;
                 }
@@ -212,14 +212,12 @@ namespace _12345
         static void SeeResults()
         {
             Console.WriteLine("пользователь    К.В.О.   диагноз");
-            string[] fileData = FileStorage.ReadAllLines("results");
+            var userStorage = new UserStorage();
+            var results = userStorage.GetAll();
 
-            for (int i = 0; i < fileData.Length; i++) // fileData.Length = количество строк в файле
+            foreach (var user in results)
             {
-                string resultsLine = fileData[i];
-                string[] data = resultsLine.Split('#');
-                Console.WriteLine($"{data[0]} \t\t{data[1]} \t {data[2]}");
-
+                Console.WriteLine($"{user.Name}      {user.CorrectAnswersCount}       {user.Diagnoz}");
             }
             Console.WriteLine();
 
@@ -227,7 +225,7 @@ namespace _12345
 
         static void AddQuestion() // добавить вопрос
         {
-            Console.WriteLine("Напиши вопрос, который хочешь добавить.");
+            Console.WriteLine("Напиши вопрос, который хочешь добавить");
             Console.WriteLine("Для отмены нажми 0");
             string addQuestion = Console.ReadLine().Trim();
 

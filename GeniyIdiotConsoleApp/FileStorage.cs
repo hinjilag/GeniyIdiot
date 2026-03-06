@@ -1,46 +1,101 @@
-﻿namespace _12345
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+
+namespace _12345
 {
     public class FileStorage
     {
-        public static string textsPath = "..//..//..//questions.txt";
-        public static string answersPath = "..//..//..//answers.txt";
-        public static string resultsPath = "..//..//..//results.txt";
+        public static string textsPath = "..//..//..//questions.json";
+        public static string answersPath = "..//..//..//answers.json";
+        public static string resultsPath = "..//..//..//results.json";
+
+        public static List<Question> ReadQuestions()
+        {
+            if (!File.Exists(textsPath))
+                return new List<Question>();
+
+            string json = File.ReadAllText(textsPath);
+            return JsonSerializer.Deserialize<List<Question>>(json);
+        }
+
+        public static void WriteQuestions(List<Question> questions)
+        {
+            string json = JsonSerializer.Serialize(questions);
+            File.WriteAllText(textsPath, json);
+        }
+
+        public static List<User> ReadResults()
+        {
+            if (!File.Exists(resultsPath))
+                return new List<User>();
+
+            string json = File.ReadAllText(resultsPath);
+            return JsonSerializer.Deserialize<List<User>>(json);
+        }
+
+        public static void WriteResults(List<User> results)
+        {
+            string json = JsonSerializer.Serialize(results);
+            File.WriteAllText(resultsPath, json);
+        }
 
         public static string[] ReadAllLines(string type)
         {
             if (type == "results")
             {
-                string[] read = File.ReadAllLines(resultsPath);
-                return read;
+                var results = ReadResults();
+                string[] lines = new string[results.Count];
+                for (int i = 0; i < results.Count; i++)
+                {
+                    lines[i] = $"{results[i].Name}#{results[i].CorrectAnswersCount}#{results[i].Diagnoz}";
+                }
+                return lines;
             }
             else if (type == "questions")
             {
-                string[] read = File.ReadAllLines(textsPath);
-                return read;
+                var questions = ReadQuestions();
+                string[] lines = new string[questions.Count];
+                for (int i = 0; i < questions.Count; i++)
+                {
+                    lines[i] = questions[i].Text;
+                }
+                return lines;
             }
             else if (type == "answers")
             {
-                string[] read = File.ReadAllLines(answersPath);
-                return read;
+                var questions = ReadQuestions();
+                string[] lines = new string[questions.Count];
+                for (int i = 0; i < questions.Count; i++)
+                {
+                    lines[i] = questions[i].Answer;
+                }
+                return lines;
             }
             return new string[0];
         }
 
         public static void AppendAllText(string addQuestion, string addAnswer)
         {
-            File.AppendAllText(textsPath, addQuestion + Environment.NewLine);
-            File.AppendAllText(answersPath, addAnswer + Environment.NewLine);
+            var questions = ReadQuestions();
+            questions.Add(new Question { Text = addQuestion, Answer = addAnswer });
+            WriteQuestions(questions);
         }
 
         public static void WriteAllLines(List<string> questions, List<string> answers)
         {
-            File.WriteAllLines(textsPath, questions);
-            File.WriteAllLines(answersPath, answers);
+            var questionList = new List<Question>();
+            for (int i = 0; i < questions.Count; i++)
+            {
+                questionList.Add(new Question { Text = questions[i], Answer = answers[i] });
+            }
+            WriteQuestions(questionList);
         }
 
         public static void ClearResults()
         {
-            File.WriteAllText(resultsPath, string.Empty);
+            WriteResults(new List<User>());
         }
     }
 }
