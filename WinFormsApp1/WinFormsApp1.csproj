@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Update="adminForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="CountQuestionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="deleteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="firstForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PlayForm2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="questionAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ResultsForm3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
+</Project>
