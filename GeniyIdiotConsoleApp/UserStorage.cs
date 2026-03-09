@@ -7,7 +7,7 @@ namespace _12345
     {
         public void SaveToFile(User user1)
         {
-            var results = FileStorage.ReadResults();
+            List<User> results = FileStorage.ReadResults();
             results.Add(user1);
             FileStorage.WriteResults(results);
         }

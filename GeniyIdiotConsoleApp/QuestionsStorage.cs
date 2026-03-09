@@ -2,16 +2,16 @@
 {
     public class QuestionsStorage
     {
-        public static string textsPath = "..//..//..//questions.txt";
-        public static string answersPath = "..//..//..//answers.txt";
-        public static string resultsPath = "..//..//..//results.txt";
+        public static string textsPath = "..//..//..//questions.json";
+        public static string answersPath = "..//..//..//answers.json";
+        public static string resultsPath = "..//..//..//results.json";
 
 
         public static List<Question> GetAll()
         {
 
-            string[] questionsTexts = File.ReadAllLines(textsPath);
-            string[] questionsAnswers = File.ReadAllLines(answersPath);
+            string[] questionsTexts = FileStorage.ReadAllLines("questions");
+            string[] questionsAnswers = FileStorage.ReadAllLines("answers");
 
             List<Question> questions = new List<Question>();
             for (int i = 0; i < questionsTexts.Length; i++)
@@ -88,8 +88,6 @@
         public int GetQuestionsCount()
         {
             return GetAll().Count;
-        }
-
-        
+        }        
     }
 }

@@ -2,8 +2,8 @@
 {
     public class User
     {
-        public string Name;
-        public string Diagnoz;
-        public int CorrectAnswersCount;                      
+        public string Name { get; set; }
+        public string Diagnoz { get; set; }
+        public int CorrectAnswersCount { get; set; }
     }
 }

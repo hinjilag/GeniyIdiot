@@ -145,7 +145,7 @@ namespace _12345
                 };
 
                 // Выводим результаты
-                Console.WriteLine("        Результаты теста        ");
+                Console.WriteLine("-------- Результаты теста --------");
                 Console.WriteLine($"Количество правильных ответов: {correctAnswers} из {questionsCount}");
                 Console.WriteLine($"{user.Name}, ваш диагноз: {resultUser.Diagnoz}!");
 
@@ -211,13 +211,14 @@ namespace _12345
         // 2) смотреть результаты 
         static void SeeResults()
         {
-            Console.WriteLine("пользователь    К.В.О.   диагноз");
+            Console.WriteLine("пользователь    К.П.О.   диагноз");
+            Console.WriteLine();
             var userStorage = new UserStorage();
             var results = userStorage.GetAll();
 
             foreach (var user in results)
             {
-                Console.WriteLine($"{user.Name}      {user.CorrectAnswersCount}       {user.Diagnoz}");
+                Console.WriteLine($"{user.Name}\t{user.CorrectAnswersCount}\t{user.Diagnoz}");
             }
             Console.WriteLine();
 

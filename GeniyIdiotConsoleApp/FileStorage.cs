@@ -7,8 +7,7 @@ namespace _12345
 {
     public class FileStorage
     {
-        public static string textsPath = "..//..//..//questions.json";
-        public static string answersPath = "..//..//..//answers.json";
+        public static string textsPath = "..//..//..//questions.json";        
         public static string resultsPath = "..//..//..//results.json";
 
         public static List<Question> ReadQuestions()
@@ -29,8 +28,9 @@ namespace _12345
         public static List<User> ReadResults()
         {
             if (!File.Exists(resultsPath))
+            {
                 return new List<User>();
-
+            }               
             string json = File.ReadAllText(resultsPath);
             return JsonSerializer.Deserialize<List<User>>(json);
         }

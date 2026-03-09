@@ -2,7 +2,7 @@
 {
     public class Question
     {
-        public string Text;
-        public string Answer;                             
+        public string Text { get; set; }
+        public string Answer { get; set; }
     }
 }
