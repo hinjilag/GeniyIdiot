@@ -1,7 +1,7 @@
 ﻿using _12345;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using User = _12345.User;
+using UserMy = _12345.UserMy;
 
 namespace TG_Bot_Azam
 {
@@ -19,53 +19,80 @@ namespace TG_Bot_Azam
             Console.ReadKey();
         }
 
-        private static Dictionary<long, User> usersDict = new Dictionary<long, User>(); // словарь пользователей
+        private static Dictionary<long, UserMy> usersDict = new Dictionary<long, UserMy>(); // словарь пользователей
         private static Dictionary<long, string> userStates = new Dictionary<long, string>(); // словарь состояния чата
+        private static Dictionary<long, List<Question>> userQuestions = new Dictionary<long, List<Question>>(); // вопросы для текущей игры
+        private static Dictionary<long, int> userQuestionIndex = new Dictionary<long, int>(); // на каком вопросе пользователь
+        private static Dictionary<long, List<string>> userAnswers = new Dictionary<long, List<string>>(); // ответы пользователя
+
+
         private static async Task Bot_OnUpdate(Update update)
         {
             long chatId = update.Message.Chat.Id;
             string text = update.Message.Text;
 
-            if (update.Message.Text == "/start")
+            if (text == "/start")
             {
                 userStates[chatId] = "waiting_for_name";
-                await bot.SendMessage(update.Message.Chat.Id,
+                await bot.SendMessage(chatId,
                     "Добро пожаловать в игру гений-идиот! Как к вам обращаться?");
                 return;
-            }
 
-            if (usersDict.ContainsKey(chatId)) // такой тип был уже?
+            }
+            
+            if (usersDict.ContainsKey(chatId)) // такой тип был уже?  почему нельзя написать userStates[chatId] != null
             {
-                User existingUser = usersDict[chatId];
+                UserMy existingUser = usersDict[chatId];
             }
             else
             {
-                if (userStates.TryGetValue(chatId, out string state) && state == "waiting_for_name") // если он находиться в каком то состояни, и это состояние ожидание имени
+                if (userStates[chatId] == "waiting_for_name")
                 {
-                    User newUser = new User { Name = text };
+                    UserMy newUser = new UserMy { };
+                    newUser.Name = text;
                     usersDict[chatId] = newUser;
                     userStates[chatId] = "in_menu";
 
-                    await bot.SendMessage(update.Message.Chat.Id, $"{newUser.Name}, выбери действие (введи номер)");
-                    await bot.SendMessage(update.Message.Chat.Id, """
+                    await bot.SendMessage(chatId, $"{newUser.Name}, выбери действие (введи номер)");
+                    await bot.SendMessage(chatId, """
                     1) играть
                     2) смотреть результаты
+                    3) вход для админа
                     0) выйти из игры
                     """);
                     return;
                 }
             }
 
-            if (userStates.TryGetValue(chatId, out string currentState) && currentState == "in_menu")
+            if (userStates[chatId] == "in_menu")
             {
                 // Достаем пользователя из словаря
-                User currentUser = usersDict[chatId];
+                UserMy currentUser = usersDict[chatId];
 
                 // Обрабатываем выбор
                 if (text == "1")
                 {
-                    await bot.SendMessage(chatId, "Сейчас начнется игра...");
-                    // TODO: запустить игру
+                    await bot.SendMessage(chatId, "Сейчас начнется игра");
+                    userStates[chatId] = "playing";
+                    List<Question> questions = QuestionsStorage.GetRandomQuestions(3); // получаем вопросики
+
+
+                    if (questions.Count == 0)
+                    {
+                        await bot.SendMessage(chatId, "Ошибка!!! вопросы не найдены в файле questions.json");
+                        userStates[chatId] = "in_menu"; // возвращаем в меню
+                        return;
+                    }
+                    userQuestions[chatId] = questions;
+                    userQuestionIndex[chatId] = 0;
+                    userAnswers[chatId] = new List<string>();
+
+                    Question firstQuestion = questions[0];
+                    await bot.SendMessage(chatId, $"Вопрос 1 из {questions.Count}:");
+                    await bot.SendMessage(chatId, firstQuestion.Text);
+
+                    return;
+
                 }
                 else if (text == "2")
                 {
@@ -80,13 +107,44 @@ namespace TG_Bot_Azam
                 else if (text == "0")
                 {
                     await bot.SendMessage(chatId, "дзабах ут");
-                    // TODO: может очистить состояние?
+
                 }
                 else
                 {
                     await bot.SendMessage(chatId, "Такого пункта нет. Введи 1, 2, 3 или 0");
                 }
 
+                return;
+            }
+            // 3. ПРОЦЕСС ИГРЫ (ОБРАБОТКА ОТВЕТОВ)
+
+            if (userStates[chatId] == "playing")
+            {
+                List<Question> questions = userQuestions[chatId];
+                int currentIndex = userQuestionIndex[chatId];
+
+                // Сохраняем текст сообщения как ответ
+                userAnswers[chatId].Add(text);
+
+                // Переходим к следующему вопросу
+                currentIndex++;
+                userQuestionIndex[chatId] = currentIndex;
+
+                if (currentIndex < questions.Count)
+                {
+                    // Задаем следующий вопрос
+                    await bot.SendMessage(chatId, $"Вопрос {currentIndex + 1} из {questions.Count}:");
+                    await bot.SendMessage(chatId, questions[currentIndex].Text);
+                }
+                else
+                {
+                    // Если вопросы кончились
+                    await bot.SendMessage(chatId, "Все вопросы пройдены! Считаем результаты...");
+
+                    // Временно переводим в меню, чтобы не зациклиться
+                    userStates[chatId] = "in_menu";
+                    await bot.SendMessage(chatId, "Введите 1, чтобы играть снова, или 0 для выхода.");
+                }
                 return;
             }
         }

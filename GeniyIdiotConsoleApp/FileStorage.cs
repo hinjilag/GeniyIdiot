@@ -13,7 +13,9 @@ namespace _12345
         public static List<Question> ReadQuestions()
         {
             if (!File.Exists(textsPath))
+            {
                 return new List<Question>();
+            }
 
             string json = File.ReadAllText(textsPath);
             return JsonSerializer.Deserialize<List<Question>>(json);
@@ -25,17 +27,17 @@ namespace _12345
             File.WriteAllText(textsPath, json);
         }
 
-        public static List<User> ReadResults()
+        public static List<UserMy> ReadResults()
         {
             if (!File.Exists(resultsPath))
             {
-                return new List<User>();
+                return new List<UserMy>();
             }               
             string json = File.ReadAllText(resultsPath);
-            return JsonSerializer.Deserialize<List<User>>(json);
+            return JsonSerializer.Deserialize<List<UserMy>>(json);
         }
 
-        public static void WriteResults(List<User> results)
+        public static void WriteResults(List<UserMy> results)
         {
             string json = JsonSerializer.Serialize(results);
             File.WriteAllText(resultsPath, json);
@@ -95,7 +97,7 @@ namespace _12345
 
         public static void ClearResults()
         {
-            WriteResults(new List<User>());
+            WriteResults(new List<UserMy>());
         }
     }
 }

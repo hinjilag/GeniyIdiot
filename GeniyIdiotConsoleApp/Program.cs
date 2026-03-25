@@ -8,7 +8,7 @@ namespace _12345
     {
         static void Main(string[] args)
         {
-            User user1 = new User();
+            UserMy user1 = new UserMy();
             int questionsCount = 3;
 
             Console.WriteLine("Добро пожаловать в игру гений-идиот! Как к вам обращаться?");
@@ -92,7 +92,7 @@ namespace _12345
         }
 
         
-        static void PlayGame(User user, int questionsCount)
+        static void PlayGame(UserMy user, int questionsCount)
         {
             Console.WriteLine($"{user.Name}, отвечай на вопросы и узнаешь свой диагноз");
 
@@ -137,7 +137,7 @@ namespace _12345
                 int correctAnswers = QuestionsStorage.AskQuestions(randomQuestions, userAnswers);
 
                 // создаем нового типа для сохранения результатов 
-                User resultUser = new User
+                UserMy resultUser = new UserMy
                 {
                     Name = user.Name,
                     CorrectAnswersCount = correctAnswers,

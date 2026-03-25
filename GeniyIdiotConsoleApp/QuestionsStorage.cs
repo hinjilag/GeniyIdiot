@@ -1,41 +1,24 @@
-﻿namespace _12345
+﻿using System.Text.Json;
+
+namespace _12345
 {
     public class QuestionsStorage
     {
-        public static string textsPath = "..//..//..//questions.json";
-        public static string answersPath = "..//..//..//answers.json";
+        public static string questionPath = "..//..//..//questions.json";
+        
         public static string resultsPath = "..//..//..//results.json";
 
 
         public static List<Question> GetAll()
         {
 
-            string[] questionsTexts = FileStorage.ReadAllLines("questions");
-            string[] questionsAnswers = FileStorage.ReadAllLines("answers");
-
-            List<Question> questions = new List<Question>();
-            for (int i = 0; i < questionsTexts.Length; i++)
-            {
-                Question question = new Question();
-                question.Text = questionsTexts[i];
-                question.Answer = questionsAnswers[i];
-                questions.Add(question);
-            }
+            List<Question> questions = FileStorage.ReadQuestions();
             return questions;
         }
-        public static void SaveToFiles(List<Question> questions, string textsPath, string answersPath)
+        public static void SaveToFiles(List<Question> questions, string questionPath)
         {
-            List<string> texts = new List<string>();
-            List<string> answers = new List<string>();
-
-            foreach (Question question in questions)
-            {
-                texts.Add(question.Text);
-                answers.Add(question.Answer);
-            }
-
-            File.WriteAllLines(textsPath, texts);
-            File.WriteAllLines(answersPath, answers);
+            string jsonString = JsonSerializer.Serialize(questions);
+            File.WriteAllText(questionPath, jsonString);
         }
 
         public static int AskQuestions(List<Question> questionsForTest, List<string> userAnswers)
@@ -78,7 +61,7 @@
             if (questionNumber >= 0 && questionNumber < questions.Count)
             {
                 questions.RemoveAt(questionNumber);
-                QuestionsStorage.SaveToFiles(questions, textsPath, answersPath);
+                QuestionsStorage.SaveToFiles(questions, questionPath);
                 return true;
             }
 

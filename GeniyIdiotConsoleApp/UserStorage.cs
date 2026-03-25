@@ -5,14 +5,14 @@ namespace _12345
 {
     public class UserStorage
     {
-        public void SaveToFile(User user1)
+        public void SaveToFile(UserMy user1)
         {
-            List<User> results = FileStorage.ReadResults();
+            List<UserMy> results = FileStorage.ReadResults();
             results.Add(user1);
             FileStorage.WriteResults(results);
         }
 
-        public List<User> GetAll()
+        public List<UserMy> GetAll()
         {
             return FileStorage.ReadResults();
         }
